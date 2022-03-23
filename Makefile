@@ -11,7 +11,7 @@ simpleCounter: simpleCounter.o
 	mv $@ bin
 
 run:
-	mpiexec -np 1 ./bin/simpleCounter
+	mpiexec --hostfile clusterfile -np 2 ./bin/simpleCounter
 
 clean:
 	rm -f simpleCounter simpleCounter.o
