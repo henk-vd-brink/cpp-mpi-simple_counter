@@ -16,29 +16,28 @@ int main(int argc, char *argv[])
 
     int PING_PONG_LIMIT = 10;
 
-    int ping_pong_count = 0;
+    int count = 0;
     int partner_rank = (world_rank + 1) % 2;
 
-    while (ping_pong_count < PING_PONG_LIMIT) {
-        if (world_rank == ping_pong_count % 2) {
-            // Increment the ping pong count before you send it
-            ping_pong_count++;
-            MPI_Send(&ping_pong_count, 1, MPI_INT, partner_rank, 0,
+    while (count < PING_PONG_LIMIT) {
+        if (world_rank == count % 2) {
+
+            count++;
+
+            MPI_Send(&count, 1, MPI_INT, partner_rank, 0,
                     MPI_COMM_WORLD);
-            printf("%d sent and incremented ping_pong_count "
-                "%d to %d\n", world_rank, ping_pong_count,
+
+            printf("%d sent and incremented count"
+                "%d to %d\n", world_rank, count,
                 partner_rank);
+
         } else {
-            MPI_Recv(&ping_pong_count, 1, MPI_INT, partner_rank, 0,
+            MPI_Recv(&count, 1, MPI_INT, partner_rank, 0,
                     MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            printf("%d received ping_pong_count %d from %d\n",
-                world_rank, ping_pong_count, partner_rank);
+
+            printf("%d received count %d from %d\n",
+                world_rank, count, partner_rank);
         }
-    }
-    
-    if (world_rank == 1)
-    {
-        std::cout << "Hello from world_rank 1!!" << std::endl;
     }
 
 
