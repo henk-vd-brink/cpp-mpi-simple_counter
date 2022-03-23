@@ -36,6 +36,12 @@ int main(int argc, char *argv[])
         }
     }
     
+    if (world_rank == 1)
+    {
+        std::cout << "Hello from world_rank 1!!" << std::endl;
+    }
+
+
     // Cleanup
     MPI_Finalize();
 
