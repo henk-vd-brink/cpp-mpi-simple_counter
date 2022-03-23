@@ -10,14 +10,15 @@ int main(int argc, char *argv[])
     MPI_Init(&argc, &argv);
 
     // Get our MPI node number and node count
-    int commSize, commRank;
-    MPI_Comm_size(MPI_COMM_WORLD, &commSize);
-    MPI_Comm_rank(MPI_COMM_WORLD, &commRank);
+    int world_size, world_rank;
+    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
+    int PING_PONG_LIMIT = 10;
 
     int ping_pong_count = 0;
     int partner_rank = (world_rank + 1) % 2;
-    
+
     while (ping_pong_count < PING_PONG_LIMIT) {
         if (world_rank == ping_pong_count % 2) {
             // Increment the ping pong count before you send it
@@ -37,11 +38,6 @@ int main(int argc, char *argv[])
     
     // Cleanup
     MPI_Finalize();
-
-    if (commRank == 0)
-    {
-        std::cout << countRoot << std::endl;
-    }
 
     return 0;
 }
